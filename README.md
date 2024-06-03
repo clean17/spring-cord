@@ -81,7 +81,7 @@ ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.cl
 public class AppConfig {
     @Bean
     public MyService myService() {
-        return new MyServiceImpl(); // 구현 클래스는 별도고 구성
+        return new MyServiceImpl(); // 구현 클래스는 별도로 구성
     }
 }
 ```
