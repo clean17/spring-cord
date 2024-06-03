@@ -58,16 +58,13 @@ Context는 특정 작업이나 환경에 대한 설정 정보, 상태, 리소스
 - 리소스 로딩  - 파일 시스템, 클래스패스, 리소스
 
 > 구현 클래스
-
-### ClassPathXmlApplicationContext
-클래스패스에 있는 XML 파일에서 컨텍스트를 로드
+### GenericXmlApplicationContext
+일반적인 XML 기반 애플리케이션 컨텍스트
 ```java
-ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-```
-### FileSystemXmlApplicationContext
-파일 시스템 경로에 있는 XML 파일에서 컨텍스트를 로드
-```java
-ApplicationContext context = new FileSystemXmlApplicationContext("C:/path/to/applicationContext.xml");
+GenericXmlApplicationContext context = new GenericXmlApplicationContext();
+context.load("classpath:beans.xml");
+context.load("file:/path/to/another-beans.xml");  // 파일 시스템에서 XML 파일 로드
+context.refresh();  // 컨텍스트 초기화
 ```
 ### AnnotationConfigApplicationContext
 자바 애노테이션을 사용하여 구성 클래스를 통해 컨텍스트를 로드
@@ -95,6 +92,21 @@ public class Main {
 }
 
 ```
+
+## BeanFactory
+Spring IoC(Inversion of Control) 컨테이너의 루트 인터페이스<br>
+`BeanFactory`는 Spring의 모든 빈을 관리하고, 빈의 생성, 구성, 관리 및 생명주기 지원을 담당<br>
+
+>주요 기능
+- 빈 관리
+- 지연 로딩 - 기본 Lazy Loding
+- IoC 지원 - 의존성 주입으로 빈 간의 의존성 관리
+- 다양한 스코프 지원 - 싱글톤, 프로토타입 등
+
+> BeanFactory 구현체<br>
+> 
+일반적으로 `ApplicationContext`를 사용한다<br>
+`BeanFactory`에서 여러기능을 추가한 것으로 차이점은 모든 싱글톤 빈을 즉시 주입한다
 
 ## 서블릿 컨테이너(Servlet Container)
 서블릿을 실행하고 관리하는 자바 엔터프라이즈 환경의 구성 요소 (Apache Tomcat, Jetty, WildFly, GlassFish)
