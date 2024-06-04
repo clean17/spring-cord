@@ -2,6 +2,7 @@ package hello.core.beanfilnd;
 
 import hello.core.config.AppConfig;
 import hello.core.service.MyService;
+import hello.core.singleton.SingletonService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -67,5 +68,14 @@ public class ApplicationContextInfoTest {
         for (String key : beansOfType.keySet()) {
             System.out.println("key = "+key + " value = "+ beansOfType);
         }
+    }
+
+    @Test
+    @DisplayName("싱글톤 비교")
+    void singletonServiceTest() {
+        SingletonService singletonService1 = SingletonService.getInstance();
+        SingletonService singletonService2 = SingletonService.getInstance();
+
+        assertThat(singletonService1).isSameAs(singletonService2);
     }
 }
