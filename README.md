@@ -197,3 +197,139 @@ public class AppConfig$$EnhancerBySpringCGLIB extends AppConfig {
     }
 }
 ```
+### EnhancerBySpringCGLIB
+스프링 프레임워크가 빈을 프록시할 때 사용하는 CGLIB 라이브러리의 Enhancer 클래스를 통해 생성된 동적 프록시 클래스<br>
+CGLIB는 코드 생성 라이브러리(Code Generation Library)로, 런타임에 클래스의 바이트코드를 조작하여 동적 프록시를 생성한다<br>
+스프링은 이 프록시를 사용해서 싱글톤을 보장하게 된다<br>
+CGLIB는 클래스 기반으로 프록시를 생성하기 때문에 `final`로 선언된 코드는 프록시로 생성할 수 없다<br>
+
+## ComponentScan
+스프링 프레임워크내에서 특정 패키지의 클래스들을 검색하여 컨테이너에 빈으로 등록해준다<br>
+`@Component`, `@Configuration`, `@Service`, `@Repository`, `@Controller`을 찾아 빈으로 등록<br>
+
+```java
+@Configuration
+@ComponentScan(basePackages = "com.example.app")
+public class AppConfig {
+}
+```
+`basePackages`속성으로 스캔할 패키지를 지정한다<br>
+패키지 내부에서 `@Component`이 붙은 클래스를 자동으로 스프링 컨텍스트에 빈으로 등록한다<br>
+
+- 필터 사용<br>
+  컴포넌트 스캔에서 특정 조건을 만족하는 클래스만 포함하거나 제외하려면 필터를 사용할 수 있다
+```java
+@Configuration
+@ComponentScan(
+    basePackages = "com.example.app",
+    includeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = CustomAnnotation.class),
+    excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = "com\\.example\\.app\\.exclude\\..*")
+)
+public class AppConfig {
+}
+```
+`includeFilters`에 추가된 `@CustomAnnotation`어노테이션이 붙은 클래스도 빈으로 등록한다<br>
+`excludeFilters`에 추가된 `com.example.app.exclude`패키지는 검색에서 제외한다<br>
+
+범위를 지정하지 않으면 `@ComponentScan`클래스가 속한 패키지를 검색한다<br>
+스프링 부트는 프로젝트 패키지 최상단 위치(`@SpringBootApplication)`에서 `@ComponentScan`을 사용한다<br>
+
+`@Component`의 기본적인 빈 등록 전략은 클래스명의 앞글자만 소문자로 바꿔 사용한다<br>
+특정 이름으로 직접 등록하고 싶다면 `@Component("customConponentNm")`처럼 지정해주면 된다
+
+### @Autowired
+`@Component`가 붙은 클래스의 기존 생성자가 다른 인스턴스를 필요로 할 때 `@Autowired`애너테이션을 사용하여 의존성을 주입할 수 있다(DI)
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyComponent {
+
+    private final MyService myService;
+
+    @Autowired
+    public MyComponent(MyService myService) {
+        this.myService = myService;
+    }
+
+    public void doWork() {
+        myService.performService();
+    }
+}
+```
+기본적인 빈 주입 전략은 `@Autowired`가 적용된 멤버변수의 타입을 컨테이너에서 검색해 주입한다
+
+## 의존성 주입 방법
+- 생성자 주입
+```java
+@Service
+public class MyService {
+
+    private final MyRepository myRepository;
+
+    @Autowired
+    public MyService(MyRepository myRepository) {
+        this.myRepository = myRepository;
+    }
+}
+```
+불변성 보장<br>
+의존성이 변하지 않으므로 테스트 용이<br>
+순환 참조 알림 (BeanCurrentlyInCreationException)<br>
+
+- 필드 주입
+```java
+@Service
+public class MyService {
+
+    @Autowired
+    private MyRepository myRepository;
+}
+```
+간결성<br>
+불변성 부족<br>
+순환 참조 문제<br>
+- 세터 주입
+```java
+@Service
+public class MyService {
+
+    private MyRepository myRepository;
+
+    @Autowired
+    public void setMyRepository(MyRepository myRepository) {
+        this.myRepository = myRepository;
+    }
+}
+```
+불변성 미보장<br>
+순환 참조 완화 (빈을 먼저 생성하고 의존성을 나중에 주입)<br>
+
+의존성이 불변하지 않다면 런타임중 어떤 동작이 나올지 보장할 수 없다<br>
+멀티스레드가 동시에 접근할 경우 예상할 수 없는 결과가 나올 수 있다<br>
+불변하지 않을 경우 테스트 중에도 변경할 수 있으므로 결과 예측이 힘들다<br>
+
+### @RequiredArgsConstructor<br>
+Lombok의 `@RequiredArgsConstructor`를 사용하면 생성자 주입을 동일하게 만들어준다<br>
+`final`필드와 `@NonNull`필드에 대해 생성자를 자동으로 생성한다<br>
+```java
+@Service
+@RequiredArgsConstructor
+public class MyService {
+    private final MyRepository myRepository;
+    
+}
+```
+```java
+@Service
+public class MyService {
+    private final MyRepository myRepository;
+
+    @Autowired
+    public MyService(MyRepository myRepository) {
+        this.myRepository = myRepository;
+    }
+    
+}
+```
