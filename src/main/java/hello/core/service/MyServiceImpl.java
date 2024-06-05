@@ -14,7 +14,7 @@ public class MyServiceImpl implements MyService {
         this.myRepository = myRepository;
     }
 
-    // ctrl shift T - 테스트 케이스 단축키
+    // "ctrl shift T" - 테스트 케이스 단축키
     @Override
     public void print() {
         myRepository.print();
