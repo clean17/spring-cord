@@ -1,4 +1,5 @@
 # ApplicationContext
+![img_4.png](img_4.png)
 애플리케이션의 설정 정보를 제공한다<br>
 스프링 애플리케이션에서 빈(Bean)을 생성하고 관리하는 핵심 인터페이스<br>
 ApplicationContext는 스프링 IoC(Inversion of Control) 컨테이너의 고급 형태이다

@@ -1,4 +1,5 @@
 ## BeanDefinition
+![img_1.png](img_1.png)
 IoC컨테이너가 관리하는 객체를 정의하는 메타데이터<br>
 스프링은 xml파일, 자바 설정 클래스, 자바 어노테이션으로 `BeanDefinition`을 정의한다<br>
 스프링 컨테이너는 `BeanDefinition`만 보고 빈 생성, 설정, 생명주기를 관리한다<br>

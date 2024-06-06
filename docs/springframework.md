@@ -1,5 +1,5 @@
 # 스프링 프레임워크
-
+![img_2.png](img_2.png)
 ### 스프링 코어
 스프링의 핵심 기능 제공, IoC(Inversion of Control)와 DI(Dependency Injection)를 구현<br>
 이를 통해 객체 간의 의존성을 효율적으로 관리

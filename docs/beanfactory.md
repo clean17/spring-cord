@@ -1,4 +1,5 @@
 ## BeanFactory
+![img.png](img.png)
 Spring IoC(Inversion of Control) 컨테이너의 루트 인터페이스<br>
 `BeanFactory`는 Spring의 모든 빈을 관리하고, 빈의 생성, 구성, 관리 및 생명주기 지원을 담당<br>
 

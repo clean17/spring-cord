@@ -1,4 +1,5 @@
 ## 서블릿 컨테이너(Servlet Container)
+![img_3.png](img_3.png)
 서블릿을 실행하고 관리하는 자바 엔터프라이즈 환경의 구성 요소 (Apache Tomcat, Jetty, WildFly, GlassFish)
 >주요 기능
 >
