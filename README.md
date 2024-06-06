@@ -21,9 +21,9 @@
 
 ## [@Configuration](docs/configuration.md)
 
-## [@ComponentScan](docs/ComponentScan.md)
+## [@ComponentScan](docs/componentscan.md)
 
-## [@Autowired](docs/Autowired.md)
+## [@Autowired](docs/autowired.md)
 
 ## [Meta-Annotations](docs/metaannotations.md)
 
