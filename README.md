@@ -27,6 +27,5 @@
 
 ## [@Autowired Option](docs/autowiredoption.md)
 
+## [@Quilifier, @Primary](docs/quilifier.md)
 
-
-  
