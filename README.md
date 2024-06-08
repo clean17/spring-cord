@@ -62,3 +62,4 @@ public class OuterClass {
 
 ## [@Quilifier, @Primary](docs/quilifier.md)
 
+## [Bean Lifecycle callback](docs/beanlifecyclecallback.md)
