@@ -1,5 +1,8 @@
 package hello.core.repository;
 
+import org.springframework.context.annotation.Primary;
+
+@Primary
 public class FirstRepository implements MyRepository{
 
     @Override

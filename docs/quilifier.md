@@ -88,4 +88,36 @@ public class ServiceImpl1 implements Service {
 }
 ```
 
+### 어노테이션으로 컴파일 오류 체크
+`@Quilifier`를 자주 사용할 때 이름을 틀려도 컴파일 오류가 발생하지 않는다<br>
+이 때는 어노테이션을 만들어서 실수를 방지 할 수 있다<br>
+```java
+// 기존 코드
+@Quilifier("secondRepository")
+public class SecondRepository implements MyRepository{
+
+    // ...
+}
+```
+이름 철자를 틀릴 수 도 있으므로 어노테이션으로 방지한다<br>
+`@Qualifier`어노테이션 정의 부분을 가져온 뒤 `@Qualifier`라인만 추가한다
+```java
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@Documented
+@Qualifier("myPolicy")
+public @interface MyPolicy {
+}
+```
+```java
+@MyPolicy
+public class SecondRepository implements MyRepository{
+
+    // ...
+}
+```
+이제 해당 빈을 사용할 경우 커스텀 어노테이션을 사용해야 한다<br>
+어노테이션 이름을 틀리면 컴파일 오류가 발생하고 개발자가 직접 빈 이름을 매번 입력할 필요가 없다
+
 [Back to main README](../README.md)
