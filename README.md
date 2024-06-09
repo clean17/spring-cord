@@ -66,3 +66,5 @@ public class OuterClass {
 
 ## [Bean scope](docs/beanscope.md)
  
+## [ObjectProvider](docs/provider.md)
+
