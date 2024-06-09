@@ -68,3 +68,4 @@ public class OuterClass {
  
 ## [ObjectProvider](docs/provider.md)
 
+## [request scope](docs/requestscope.md)
